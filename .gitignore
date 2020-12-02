@@ -1,3 +1,4 @@
+.secrets
 *.bak
 .gitattributes
 .last_checked
