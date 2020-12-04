@@ -19,4 +19,4 @@ jobs:
         CONTEXT_SECRETS: ${{ toJson(secrets) }}
       run: |
         pip install -q ghapi tweepy
-        python .github/scripts/build-tweet-release.py
+        python .github/scripts/build-tweet.py
