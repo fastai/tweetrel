@@ -2,9 +2,12 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"twitter_api": "00_core.ipynb",
+         "tweet_text": "00_core.ipynb",
+         "send_tweet": "00_core.ipynb",
+         "install": "00_core.ipynb"}
 
-modules = []
+modules = ["core.py"]
 
 doc_url = "https://tweetrel.fast.ai/"
 
