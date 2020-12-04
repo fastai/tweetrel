@@ -1,7 +1,6 @@
 {
   "tweetrel": {
     "Overview": "/",
-    "module name here": "core.html",
-    "Tutorial: Creating tweetrel": "tutorial_build.html"
+    "Tutorial: Creating tweetrel": "core.html"
   }
 }

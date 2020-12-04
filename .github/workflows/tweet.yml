@@ -18,5 +18,5 @@ jobs:
         CONTEXT_GITHUB: ${{ toJson(github) }}
         CONTEXT_SECRETS: ${{ toJson(secrets) }}
       run: |
-        pip install -q ghapi tweepy
+        pip install -Uq git+https://github.com/fastai/tweetrel.git
         python .github/scripts/build-tweet.py

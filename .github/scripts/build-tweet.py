@@ -1,2 +1,2 @@
-from tweetrel import *
-send_tweet()
+import tweetrel
+tweetrel.send_tweet()
