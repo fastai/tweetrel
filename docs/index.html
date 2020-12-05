@@ -75,6 +75,31 @@ git push
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Customization">Customization<a class="anchor-link" href="#Customization"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you'll see, the default template is:</p>
+
+<pre><code>New #{repo} release: v{tag_name}. {html_url}\n\n{body}
+
+</code></pre>
+<p>You can customize that by setting the <code>TWEETREL_TEMPLATE</code> environment variable. For instance, add this (with suitable indentation) to the <code>env:</code> section of your workflow YAML file:</p>
+<div class="highlight"><pre><span></span>TWEETREL_TEMPLATE: <span class="p">|</span>
+  We are proud to announce the <span class="o">{</span>tag_name<span class="o">}</span> release of <span class="o">{</span>repo<span class="o">}</span>.
+
+  For more, see: <span class="o">{</span>html_url<span class="o">}</span>. Here are the details:
+  <span class="o">{</span>body<span class="o">}</span>
+</pre></div>
+<p>The <code>|</code> is the YAML character that indicates a multiline string. The sections in <code>{...}</code> are the Python formatting template variables that will be replaced by the details of your release. You don't need to include all of them if you don't want them.</p>
+
+</div>
+</div>
+</div>
 </div>
  
 

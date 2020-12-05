@@ -35,3 +35,21 @@ git push
 You can test this without actually making a release by going to your GitHub repo in your browser, clicking the *Actions* tab, then clicking on the *tweet* action, and clicking the *run workflow* button. That will use GitHub's example release payload for testing.
 
 Once you've confirmed it's working, try making a release on GitHub, and check that you see the green tick in the Actions tab showing a successful run of the *tweet* action.
+
+## Customization
+
+As you'll see, the default template is:
+
+    New #{repo} release: v{tag_name}. {html_url}\n\n{body}
+
+You can customize that by setting the `TWEETREL_TEMPLATE` environment variable. For instance, add this (with suitable indentation) to the `env:` section of your workflow YAML file:
+
+```bash
+TWEETREL_TEMPLATE: |
+  We are proud to announce the {tag_name} release of {repo}.
+  
+  For more, see: {html_url}. Here are the details:
+  {body}
+```
+
+The `|` is the YAML character that indicates a multiline string. The sections in `{...}` are the Python formatting template variables that will be replaced by the details of your release. You don't need to include all of them if you don't want them.
