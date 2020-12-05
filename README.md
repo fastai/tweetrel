@@ -1,4 +1,4 @@
-# tweetrel
+# How to tweet your releases
 > Send a tweet to let people know when you release software on GitHub.
 
 
