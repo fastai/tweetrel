@@ -309,7 +309,7 @@ nb_path: "00_core.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can create a function that formats a tweet based on this information:</p>
+<p>We can create a function that formats a tweet based on this information, which will take the template from an environment variable if available, otherwise will use a reasonable default:</p>
 
 </div>
 </div>
@@ -346,9 +346,10 @@ nb_path: "00_core.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">tweet_text</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+    <span class="n">def_tmpl</span> <span class="o">=</span> <span class="s2">&quot;New #</span><span class="si">{repo}</span><span class="s2"> release: v</span><span class="si">{tag_name}</span><span class="s2">. </span><span class="si">{html_url}</span><span class="se">\n\n</span><span class="si">{body}</span><span class="s2">&quot;</span>
+    <span class="n">tweet_tmpl</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;TWEETREL_TEMPLATE&#39;</span><span class="p">,</span> <span class="n">def_tmpl</span><span class="p">)</span>
     <span class="n">rel</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">release</span>
-    <span class="n">owner</span><span class="p">,</span><span class="n">repo</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;https://api.github.com/repos/([^/]+)/([^/]+)/&#39;</span><span class="p">,</span> <span class="n">rel</span><span class="o">.</span><span class="n">url</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">tweet_tmpl</span> <span class="o">=</span> <span class="s2">&quot;New #</span><span class="si">{repo}</span><span class="s2"> release: v</span><span class="si">{tag_name}</span><span class="s2">. </span><span class="si">{html_url}</span><span class="se">\n\n</span><span class="si">{body}</span><span class="s2">&quot;</span>
+    <span class="n">owner</span><span class="p">,</span><span class="n">repo</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">full_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">tweet_tmpl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="n">tag_name</span><span class="o">=</span><span class="n">rel</span><span class="o">.</span><span class="n">tag_name</span><span class="p">,</span> <span class="n">html_url</span><span class="o">=</span><span class="n">rel</span><span class="o">.</span><span class="n">html_url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">rel</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">280</span><span class="p">:</span> <span class="k">return</span> <span class="n">res</span>
     <span class="k">return</span> <span class="n">res</span><span class="p">[:</span><span class="mi">279</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;…&quot;</span>
@@ -420,7 +421,7 @@ None
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="send_tweet" class="doc_header"><code>send_tweet</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>send_tweet</code>()</p>
+<h4 id="send_tweet" class="doc_header"><code>send_tweet</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>send_tweet</code>()</p>
 </blockquote>
 
 </div>
@@ -567,7 +568,7 @@ cp tweetrel/core.py .github/scripts/build-tweet-release.py
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="install" class="doc_header"><code>install</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>install</code>()</p>
+<h4 id="install" class="doc_header"><code>install</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L41" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>install</code>()</p>
 </blockquote>
 
 </div>
@@ -591,7 +592,7 @@ cp tweetrel/core.py .github/scripts/build-tweet-release.py
 <span class="k">def</span> <span class="nf">install</span><span class="p">():</span>
     <span class="n">fill_workflow_templates</span><span class="p">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tweet&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="s2">&quot;release:</span><span class="se">\n</span><span class="s2">  types: [published]&quot;</span><span class="p">,</span>
-        <span class="n">run</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;pip install -Uq git+https://github.com/fastai/tweetrel.git&#39;</span><span class="p">,</span>
+        <span class="n">run</span><span class="o">=</span><span class="s1">&#39;pip install -Uq tweetrel&#39;</span><span class="p">,</span>
         <span class="n">context</span><span class="o">=</span><span class="n">env_contexts</span><span class="p">(</span><span class="s1">&#39;secrets&#39;</span><span class="p">),</span>
         <span class="n">script</span><span class="o">=</span><span class="s2">&quot;import tweetrel</span><span class="se">\n</span><span class="s2">tweetrel.send_tweet()&quot;</span>
     <span class="p">)</span>
@@ -606,9 +607,35 @@ cp tweetrel/core.py .github/scripts/build-tweet-release.py
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Since this uses <code>call_parse</code>, we can run it as a standard Python function, as well as through the CLI, we can test it by executing the function:</p>
+<p>In this case, we just used <code>tweetrel</code> in the "pip install" line, which assumes that the project has been uploaded to pypi (which you can do by typing <code>make release</code> in your terminal, if you use nbdev or <a href="https://github.com/fastai/pypi_template">pypi_template</a>. If you are just installing from GitHub directly, you'd use this instead:</p>
+<div class="highlight"><pre><span></span><span class="n">run</span><span class="o">=</span><span class="s1">&#39;pip install -Uq git+https://github.com/fastai/tweetrel.git&#39;</span><span class="p">,</span>
+</pre></div>
+<p>Since <a href="/core.html#install"><code>install</code></a> uses <code>call_parse</code>, we can run it as a standard Python function, so we can test it by executing the function:</p>
 <div class="highlight"><pre><span></span><span class="n">install</span><span class="p">()</span>
 </pre></div>
+<p>Alternatively, we can run it through the CLI, by first adding to our <code>settings.ini</code>:</p>
+<div class="highlight"><pre><span></span><span class="nv">console_scripts</span> <span class="o">=</span> <span class="nv">tweetrel_install</span><span class="o">=</span>tweetrel.core:install
+</pre></div>
+<p>...and then installing our library locally:</p>
+<div class="highlight"><pre><span></span>pip install -e .
+</pre></div>
+<p>...and finaly running the command:</p>
+<div class="highlight"><pre><span></span>tweetrel_install
+</pre></div>
+<p>If this all works, then you can run <code>make release</code> to submit your action to pypi and conda, making it available for anyone to use in their workflows.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By following these steps, we have created a Python-based GitHub Action, which can be installed using pip or conda, and can be added to any repo with a single command. See the overview page for this module to see how we document this for end users of the action.</p>
 
 </div>
 </div>

@@ -20,9 +20,10 @@ def twitter_api():
 
 # Cell
 def tweet_text(payload):
+    def_tmpl = "New #{repo} release: v{tag_name}. {html_url}\n\n{body}"
+    tweet_tmpl = os.getenv('TWEETREL_TEMPLATE', def_tmpl)
     rel = payload.release
-    owner,repo = re.findall(r'https://api.github.com/repos/([^/]+)/([^/]+)/', rel.url)[0]
-    tweet_tmpl = "New #{repo} release: v{tag_name}. {html_url}\n\n{body}"
+    owner,repo = example.repository.full_name.split('/')
     res = tweet_tmpl.format(repo=repo, tag_name=rel.tag_name, html_url=rel.html_url, body=rel.body)
     if len(res)<=280: return res
     return res[:279] + "…"
@@ -41,7 +42,7 @@ from fastcore.script import *
 def install():
     fill_workflow_templates(
         name='tweet', event="release:\n  types: [published]",
-        run=f'pip install -Uq git+https://github.com/fastai/tweetrel.git',
+        run='pip install -Uq tweetrel',
         context=env_contexts('secrets'),
         script="import tweetrel\ntweetrel.send_tweet()"
     )
