@@ -4,6 +4,7 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"auth": "00_core.ipynb",
          "twitter_api": "00_core.ipynb",
+         "example_rel": "00_core.ipynb",
          "tweet_text": "00_core.ipynb",
          "send_tweet": "00_core.ipynb",
          "install": "00_core.ipynb"}
