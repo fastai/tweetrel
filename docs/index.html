@@ -1,13 +1,13 @@
 ---
 
-title: Project name here
+title: tweetrel
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "Summary description here."
-description: "Summary description here."
+summary: "Send a tweet to let people know when you release software on GitHub."
+description: "Send a tweet to let people know when you release software on GitHub."
 nb_path: "index.ipynb"
 ---
 <!--
@@ -31,7 +31,9 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This file will become your README and also the index of your documentation.</p>
+<p>It's great to release software. And even better when people actually know about it!</p>
+<p>One way to let people know about your new software releases is to tell them on Twitter. But we're software developers, not social media managers -- so that means we <em>automate all the things</em>.</p>
+<p>With tweetrel, you can have GitHub send a tweet for you whenever you make a release.</p>
 
 </div>
 </div>
@@ -44,7 +46,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>pip install your_project_name</code></p>
+<p><code>pip install tweetrel</code></p>
 
 </div>
 </div>
@@ -57,44 +59,22 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Fill me in please! Don't forget code examples:</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span>
+<p>First, you need to add your Twitter API details as <a href="https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets">GitHub secrets</a>. You'll need to sign up for a <a href="https://developer.twitter.com/en/docs">Twitter API</a> account if you don't already have one. Once you've signed up, Twitter will give you four keys: <code>consumer_key</code>, <code>consumer_secret</code>, <code>access_token</code>, and <code>access_token_secret</code>. Create a new secret called <code>TWITTER</code>, and paste those four keys in, with a space between each one.</p>
+<p>If you need to send Tweets on behalf of a different user to the one attached to your login, you'll need to authenticate with Twitter as that user. Run <code>tweetrel-auth</code> in your terminal and follow the instructions, and it will give you the <code>access_token</code> and <code>access_token_secret</code> you need -- paste them (after a space) after your <code>consumer_key</code> and <code>consumer_secret</code> and that will let you send tweets as the user you authenticated as.</p>
+<p>Next, in your terminal, <code>cd</code> to the root of your repo, and then run:</p>
+<div class="highlight"><pre><span></span>tweetrel-install
 </pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>2</pre>
-</div>
-
-</div>
+<p>That will set <code>tweetrel</code> up for you to run automatically upon release. You'll see two folders added to your <code>.github</code> folder, containing the YAML workflow and python script. No additional setup is needed, other than pushing these to GitHub:</p>
+<div class="highlight"><pre><span></span>git add -A .github
+git commit -am <span class="err">&#39;</span>Add tweetrel<span class="sb">`</span>
+git push
+</pre></div>
+<p>You can test this without actually making a release by going to your GitHub repo in your browser, clicking the <em>Actions</em> tab, then clicking on the <em>tweet</em> action, and clicking the <em>run workflow</em> button. That will use GitHub's example release payload for testing.</p>
+<p>Once you've confirmed it's working, try making a release on GitHub, and check that you see the green tick in the Actions tab showing a successful run of the <em>tweet</em> action.</p>
 
 </div>
 </div>
-
 </div>
-    {% endraw %}
-
 </div>
  
 

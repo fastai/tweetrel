@@ -83,9 +83,48 @@ nb_path: "00_core.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>You'll need a <a href="https://developer.twitter.com/en/apply-for-access">Twitter API login</a>. If you need to send Tweets on behalf of a different user to the one attached to your login, you'll need to authenticate with Twitter as that user. Run <code>tweetrel-auth</code> in your terminal and follow the instructions to get those access tokens.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="auth" class="doc_header"><code>auth</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>auth</code>()</p>
+</blockquote>
+<p>Function for <code>tweetrel-auth</code> CLI command</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The Twitter part of this tutorial isn't the main thing we want to explain, but the thing to note carefully here is how to access <em>secrets</em> in your workflow.</p>
 <p>The Twitter API requires authentication, so we'll store our details in a GitHub secret. We'll just use one secret, we our keys stored space delimited. We generally use an <a href="https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-an-organization">organization secret</a>, so that we can update secrets in one place as needed.</p>
-<p>Contexts are passed to ghapi as json-encoded environment variables. Each variable name starts with <code>CONTEXT_</code> -- so for instance the <code>secrets</code> context is <code>CONTEXT_SECRETS</code>. In order to simulate this when testing, ensure that you have set an appropriate environment variable before importing <code>ghapi</code>. We've put our JSON encoded secrets for testing into a <code>.secrets</code> file (which we added to <code>.gitignore</code> so it wouldn't be pushed to our repo), so we'll use it here.</p>
+<p>Contexts are passed to ghapi as json-encoded environment variables. Each variable name starts with <code>CONTEXT_</code> -- so for instance the <code>secrets</code> context is <code>CONTEXT_SECRETS</code>. In order to simulate this when testing, ensure that you have set an appropriate environment variable before importing <code>ghapi</code>. We'll put our JSON encoded secrets for testing into a <code>.secrets</code> file (which we add to <code>.gitignore</code> so it won't be pushed to our repo). We put the four parts (<code>consumer_key</code>, <code>consumer_secret</code>, <code>access_token</code>, and <code>access_token_secret</code>) into a single space delimited secret.</p>
 
 </div>
 </div>
@@ -173,7 +212,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="twitter_api" class="doc_header"><code>twitter_api</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>twitter_api</code>()</p>
+<h4 id="twitter_api" class="doc_header"><code>twitter_api</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L28" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>twitter_api</code>()</p>
 </blockquote>
 
 </div>
@@ -325,7 +364,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="tweet_text" class="doc_header"><code>tweet_text</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tweet_text</code>(<strong><code>payload</code></strong>)</p>
+<h4 id="tweet_text" class="doc_header"><code>tweet_text</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tweet_text</code>(<strong><code>payload</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -421,7 +460,7 @@ None
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="send_tweet" class="doc_header"><code>send_tweet</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>send_tweet</code>()</p>
+<h4 id="send_tweet" class="doc_header"><code>send_tweet</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>send_tweet</code>()</p>
 </blockquote>
 
 </div>
@@ -529,29 +568,6 @@ cp tweetrel/core.py .github/scripts/build-tweet-release.py
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The above steps are all that's needed to create a Python-based workflow for use in a single project. To make it accessible for any project (including other people's projects), we need to distribute it. The easiest way to do that is with <code>pip</code>. <code>pip</code> can install modules directly from GitHub, or from the PyPi repository.</p>
 <p>Our first step is to add a command that makes it easy to install the <code>tweetrel</code> workflow into a project. We can use <code>fastcore.script.call_parse</code> to create a function that can be run from the terminal.</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">fastcore.script</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>In the function, we'll use <code>fill_workflow_templates</code> instead of <code>gh-create-workflow</code> because it allows us to customize each part of the YAML workflow file exactly as we need it:</p>
 
 </div>
@@ -568,7 +584,7 @@ cp tweetrel/core.py .github/scripts/build-tweet-release.py
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="install" class="doc_header"><code>install</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L41" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>install</code>()</p>
+<h4 id="install" class="doc_header"><code>install</code><a href="https://github.com/fastai/tweetrel/tree/master/tweetrel/core.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>install</code>()</p>
 </blockquote>
 
 </div>
@@ -614,13 +630,13 @@ cp tweetrel/core.py .github/scripts/build-tweet-release.py
 <div class="highlight"><pre><span></span><span class="n">install</span><span class="p">()</span>
 </pre></div>
 <p>Alternatively, we can run it through the CLI, by first adding to our <code>settings.ini</code>:</p>
-<div class="highlight"><pre><span></span><span class="nv">console_scripts</span> <span class="o">=</span> <span class="nv">tweetrel_install</span><span class="o">=</span>tweetrel.core:install
+<div class="highlight"><pre><span></span><span class="nv">console_scripts</span> <span class="o">=</span> tweetrel-install<span class="o">=</span>tweetrel.core:install
 </pre></div>
 <p>...and then installing our library locally:</p>
 <div class="highlight"><pre><span></span>pip install -e .
 </pre></div>
 <p>...and finaly running the command:</p>
-<div class="highlight"><pre><span></span>tweetrel_install
+<div class="highlight"><pre><span></span>tweetrel-install
 </pre></div>
 <p>If this all works, then you can run <code>make release</code> to submit your action to pypi and conda, making it available for anyone to use in their workflows.</p>
 
