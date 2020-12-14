@@ -22,7 +22,7 @@ def auth():
     print(' '.join(auth.get_access_token(code)))
 
 # Cell
-from ghapi import *
+from ghapi.all import *
 
 # Cell
 def twitter_api():
@@ -42,8 +42,7 @@ def tweet_text(payload):
     rel = payload.release
     owner,repo = payload.repository.full_name.split('/')
     res = tweet_tmpl.format(repo=repo, tag_name=rel.tag_name, html_url=rel.html_url, body=rel.body)
-    if len(res)<=280: return res
-    return res[:279] + "…"
+    return res if len(res)<=280 else (res[:279] + "…")
 
 # Cell
 def send_tweet():
